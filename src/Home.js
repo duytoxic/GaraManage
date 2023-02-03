@@ -5,9 +5,8 @@ export class Home extends Component {
         return(
             <>
             <div className="mt-5 d-flex justify-content-left">
-                Home page.
+                Trang chủ.
             </div>
-            <p>ccccc</p>
             </>
         )
     }

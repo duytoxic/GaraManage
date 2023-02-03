@@ -18,24 +18,24 @@ function App() {
     <BrowserRouter>
       <div className="App container">
         <h3 className="d-flex justify-content-center m-3">
-          My React App
+          Quản lý Gara
         </h3>
 
         <nav className="navbar navbar-expand-sm bg-light navbar-dark">
           <ul className="navbar-nav">
             <li className="nav-item m-1">
               <NavLink className="btn btn-light btn-outline-primary" to="/home">
-                Home
+                Trang chủ
               </NavLink>
             </li>
             <li className="nav-item m-1">
-              <NavLink className="btn btn-light btn-outline-primary" to="/department">
-                Department
+              <NavLink className="btn btn-light btn-outline-primary" to="/customer">
+                Khách hàng
               </NavLink>
             </li>
             <li className="nav-item m-1">
               <NavLink className="btn btn-light btn-outline-primary" to="/employee">
-                Employee
+                Nhân viên
               </NavLink>
             </li>
           </ul>
@@ -43,7 +43,7 @@ function App() {
 
         <Routes>
           <Route path="home" element ={<Home />}>abc</Route>
-          <Route path="department" element ={<Department />}></Route>
+          <Route path="customer" element ={<Department />}></Route>
           <Route path="employee" element ={<Employee />}></Route>
         </Routes>
 

@@ -10,6 +10,8 @@ export class Department extends Component {
             name: "",
             dob: "",
             email: "",
+            phone: "",
+            address: "",
             DepartmentId: 0,
 
             DepartmentIdFilter: "",
@@ -70,13 +72,27 @@ export class Department extends Component {
         this.setState({ name: e.target.value });
     }
 
+    changeDepartmentEmail = (e) => {
+        this.setState({ email: e.target.value });
+    }
+
+    changeDepartmentAddress = (e) => {
+        this.setState({ address: e.target.value });
+    }
+
+    changeDepartmentPhone = (e) => {
+        this.setState({ phone: e.target.value });
+    }
+
     addClick() {
         this.setState({
             modalTitle: "Thêm mới khách hàng",
             id: 0,
             name: "",
             dob: "",
-            email: ""
+            email: "",
+            phone: "",
+            address: "",
         });
     }
     editClick(dep) {
@@ -85,8 +101,11 @@ export class Department extends Component {
             id: dep.id,
             name: dep.name,
             dob: dep.dob,
-            email: dep.email
+            email: dep.email,
+            phone: dep.phone,
+            address: dep.address,
         });
+        this.refreshList();
     }
 
     createClick() {
@@ -102,14 +121,13 @@ export class Department extends Component {
         })
             .then(res => res.json())
             .then((result) => {
-                alert(result);
+                alert('Thêm thành công');
                 this.refreshList();
             }, (error) => {
                 alert('Failed');
             })
     }
     updateClick(id) {
-        console.log(id);
         fetch(variables.API_URL + 'Customers/' + id, {
             method: 'PUT',
             headers: {
@@ -119,20 +137,20 @@ export class Department extends Component {
             body: JSON.stringify({
                 id: this.state.id,
                 name: this.state.name,
-                dob: this.state.dob,
+                phone: this.state.phone,
                 email: this.state.email,
+                address: this.state.address,
             })
         })
             .then(res => res.json())
             .then((result) => {
-                alert(result);
+                alert('Sửa thành công');
                 this.refreshList();
             }, (error) => {
                 alert('Failed');
             })
     }
     deleteClick(id) {
-        console.log(id);
         if (window.confirm('Bạn có chắc muốn xóa?')) {
             fetch(variables.API_URL + 'Customers/' + id, {
                 method: 'DELETE',
@@ -143,7 +161,7 @@ export class Department extends Component {
             })
                 .then(res => res.json())
                 .then((result) => {
-                    alert(result);
+                    alert('Xóa thành công');
                     this.refreshList();
                 }, (error) => {
                     alert('Failed');
@@ -156,7 +174,10 @@ export class Department extends Component {
             departments,
             modalTitle,
             id,
-            name
+            name,
+            phone,
+            email,
+            address
         } = this.state;
 
         return (
@@ -175,30 +196,14 @@ export class Department extends Component {
                                 STT
                             </th>
                             <th>
-                                <div className="d-flex flex-row">
-                                    <input className="form-control m-2"
-                                        onChange={this.changeDepartmentNameFilter}
-                                        placeholder="Filter" />
-
-                                    <button type="button" className="btn btn-light"
-                                        onClick={() => this.sortResult('DepartmentName', true)}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
-                                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z" />
-                                        </svg>
-                                    </button>
-
-                                    <button type="button" className="btn btn-light"
-                                        onClick={() => this.sortResult('DepartmentName', false)}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
-                                            <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z" />
-                                        </svg>
-                                    </button>
-                                </div>
                                 Họ và tên
 
                             </th>
                             <th>
-                                Ngày sinh
+                                Số điện thoại
+                            </th>
+                            <th>
+                                Email
                             </th>
                             <th>
                                 Địa chỉ
@@ -212,9 +217,10 @@ export class Department extends Component {
                         {departments.map((dep, key) =>
                             <tr key={key}>
                                 <td>{key+=1}</td>
-                                <td>{dep.name}</td>
-                                <td>{dep.dob}</td>
+                                <td className='text-left'>{dep.name}</td>
+                                <td>{dep.phone}</td>
                                 <td>{dep.email}</td>
+                                <td>{dep.address}</td>
                                 <td>
                                     <button type="button"
                                         className="btn btn-light mr-1"
@@ -240,7 +246,7 @@ export class Department extends Component {
                         )}
                     </tbody>
                 </table>
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-hidden="true">
+                <div className="modal fade" id="exampleModal" tabIndex="" aria-hidden="true">
                     <div className="modal-dialog modal-lg modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -252,9 +258,30 @@ export class Department extends Component {
                             <div className="modal-body">
                                 <div className="input-group mb-3">
                                     <span className="input-group-text">Tên khách hàng</span>
-                                    <input type="text" className="form-control"
+                                    <input type="text" className="form-control" required
                                         value={name}
                                         onChange={this.changeDepartmentName} />
+                                </div>
+
+                                <div className="input-group mb-3">
+                                    <span className="input-group-text">Email</span>
+                                    <input type="email" className="form-control" required
+                                        value={email}
+                                        onChange={this.changeDepartmentEmail} />
+                                </div>
+
+                                <div className="input-group mb-3">
+                                    <span className="input-group-text">Phone</span>
+                                    <input type="text" className="form-control" required
+                                        value={phone}
+                                        onChange={this.changeDepartmentPhone} />
+                                </div>
+
+                                <div className="input-group mb-3">
+                                    <span className="input-group-text">Địa chỉ</span>
+                                    <input type="text" className="form-control" required
+                                        value={address}
+                                        onChange={this.changeDepartmentAddress} />
                                 </div>
 
                                 {id === 0 ?

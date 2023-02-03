@@ -1,4 +1,4 @@
 export const variables = {
-    API_URL: "https://localhost:7150/api/",
-    PHOTO_URL:"http://localhost:50306/Photos/"
+    API_URL: "http://duytoxic-001-site1.itempurl.com/api/",
+    PHOTO_URL:"http://duytoxic-001-site1.itempurl.com/Photos/"
 }
